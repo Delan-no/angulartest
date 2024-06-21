@@ -6,18 +6,22 @@ import { AppComponent } from './app.component';
 import { FirstComponent } from './first/first.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AddUserComponent } from './add-user/add-user.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     FirstComponent,
-    UserListComponent
+    UserListComponent,
+    AddUserComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

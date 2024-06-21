@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angulartest';
+  users = [
+    // Exemple de données utilisateurs
+  ];
+
+  showForm = false;
 }

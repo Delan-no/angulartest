@@ -1,0 +1,103 @@
+<div
+  class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50"
+>
+  <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+    <h2 class="text-2xl font-semibold mb-4">Ajouter un utilisateur</h2>
+    <form>
+      <div class="mb-4">
+        <label for="username" class="block text-sm font-medium text-gray-700"
+          >Username</label
+        >
+        <input
+          type="text"
+          id="username"
+          name="username"
+          class="mt-1 p-2 border rounded w-full"
+          required
+        />
+      </div>
+      <div class="mb-4">
+        <label for="password" class="block text-sm font-medium text-gray-700"
+          >Password</label
+        >
+        <input
+          type="password"
+          id="password"
+          name="password"
+          class="mt-1 p-2 border rounded w-full"
+          required
+        />
+      </div>
+      <div class="mb-4">
+        <label for="role" class="block text-sm font-medium text-gray-700"
+          >Role</label
+        >
+        <input
+          type="text"
+          id="role"
+          name="role"
+          class="mt-1 p-2 border rounded w-full"
+          required
+        />
+      </div>
+      <div class="mb-4">
+        <label for="name" class="block text-sm font-medium text-gray-700"
+          >Name</label
+        >
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="mt-1 p-2 border rounded w-full"
+          required
+        />
+      </div>
+      <div class="mb-4">
+        <label for="lastname" class="block text-sm font-medium text-gray-700"
+          >Last Name</label
+        >
+        <input
+          type="text"
+          id="lastname"
+          name="lastname"
+          class="mt-1 p-2 border rounded w-full"
+          required
+        />
+      </div>
+      <div class="mb-4">
+        <label for="mail" class="block text-sm font-medium text-gray-700"
+          >Mail</label
+        >
+        <input
+          type="email"
+          id="mail"
+          name="mail"
+          class="mt-1 p-2 border rounded w-full"
+        />
+      </div>
+      <div class="mb-4">
+        <label for="phonenumber" class="block text-sm font-medium text-gray-700"
+          >Phone Number</label
+        >
+        <input
+          type="text"
+          id="phonenumber"
+          name="phonenumber"
+          class="mt-1 p-2 border rounded w-full"
+        />
+      </div>
+      <div class="flex justify-end">
+        <button
+          type="button"
+          class="bg-gray-500 text-white py-2 px-4 rounded mr-2"
+          (click)="closeForm()"
+        >
+          Annuler
+        </button>
+        <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">
+          Ajouter
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
