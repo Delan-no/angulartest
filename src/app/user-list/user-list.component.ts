@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { User } from '../user';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-list',
@@ -50,20 +51,31 @@ export class UserListComponent implements OnInit {
       password: this.password,
       role: this.role,
       name: this.name,
-      lastname: this.lastname,
+      lastName: this.lastname,
       mail: this.email,
-      phonenumber: this.phonenumber
+      phoneNumber: this.phonenumber,
     };
 
-    console.log('Nouvel utilisateur : ', newUser);
     this.userService.addUser(newUser).subscribe(
-      
       (response) => {
         console.log('Utilisateur créé avec succès !', response);
         this.resetForm();
+        this.users.push(newUser);
+        this.showForm = false;
+        Swal.fire({
+          title: 'Succès!',
+          text: 'Utilisateur créé avec succès!',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        });
       },
       (error) => {
-        console.error('Erreur lors de la création de l\'utilisateur : ', error);
+        Swal.fire({
+          title: 'Erreur!',
+          text: "Erreur lors de la création de l'utilisateur: " + error.message,
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
       }
     );
   }
@@ -77,5 +89,4 @@ export class UserListComponent implements OnInit {
     this.email = '';
     this.phonenumber = '';
   }
-
 }
