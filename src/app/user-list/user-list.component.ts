@@ -28,18 +28,19 @@ export class UserListComponent implements OnInit {
 
   showForm = false;
   showFormUpdate = false;
+  detailUserModal = false;
 
   showAddUserForm() {
     this.showForm = true;
   }
-  showUpdateUserForm() {
-    this.showFormUpdate = true;
-  }
+  // showUpdateUserForm() {
+  //   this.showFormUpdate = true;
+  // }
   showCloseUserForm() {
     this.showForm = false;
     this.showFormUpdate = false;
   }
-
+  id: number = 0;
   name: string = '';
   email: string = '';
   password: string = '';
@@ -48,9 +49,10 @@ export class UserListComponent implements OnInit {
   role: string = '';
   username: string = '';
 
+  // function pour ajouter un nouvel utilisateur
   onSubmit() {
     const newUser: User = {
-      id: this.users.length + 1,
+      id: this.id,
       username: this.username,
       password: this.password,
       role: this.role,
@@ -85,33 +87,95 @@ export class UserListComponent implements OnInit {
     );
   }
 
-  updateUser(newUser: User) {
-    // pour modifier un utilisateur
-    this.userService.updateUser(newUser).subscribe(
+  // function pour ouvrir le formulaire de modification d'un utilisateur tout en affichant les informations de l'utilisateur
+  showUpdateUserForm(user: any): void {
+    // console.log(this.id = user.id);
+    this.id = user.id;
+    this.username = user.username;
+    this.password = user.password;
+    this.role = user.role;
+    this.name = user.name;
+    this.lastname = user.lastName;
+    this.email = user.mail;
+    this.phonenumber = user.phoneNumber;
+    this.showFormUpdate = true;
+  }
+
+  // function pour effectuer la modification d'un utilisateur
+  updateUser() {
+    const anUser: User = {
+      id: this.id,
+      username: this.username,
+      password: this.password,
+      role: this.role,
+      name: this.name,
+      lastName: this.lastname,
+      mail: this.email,
+      phoneNumber: this.phonenumber,
+    };
+    this.userService.updateUser(anUser).subscribe(
       (response) => {
+        console.log(response);
         console.log('Utilisateur mis à jour avec succès!', response);
-        this.resetForm();
-        this.users.push(newUser);
-        this.showForm = false;
+        this.showFormUpdate = false;
+        Swal.fire({
+          title: 'Succès!',
+          text: 'Utilisateur mis à jour avec succès!',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        });
+        this.ngOnInit();
       },
       (error) => {
-        console.error("Erreur lors de la mise à jour de l'utilisateur!", error);
+        Swal.fire({
+          title: 'Erreur!',
+          text:
+            "Erreur lors de la mise à jour de l'utilisateur: " + error.message,
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
       }
     );
   }
 
   // pour supprimer un utilisateur
   deleteUser(user: User) {
-    this.userService.deleteUser(user.id).subscribe(
-      () => {
-        console.log('Utilisateur supprimé avec succès!');
-        this.users = this.users.filter((user) => user.id!== user.id);
-      },
-      (error) => {
-        console.error('Erreur lors de la suppression de l\'utilisateur!', error);
+    Swal.fire({
+      title: 'Êtes-vous sûr?',
+      text: 'Vous êtes sur le point de supprimer cet utilisateur!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui, supprimer!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.deleteUser(user.id).subscribe(
+          (response) => {
+            Swal.fire({
+              title: 'Succès!',
+              text: 'Utilisateur supprimé avec succès!',
+              icon: 'success',
+              confirmButtonText: 'OK',
+            });
+            this.users = this.users.filter((u) => u.id !== user.id);
+          },
+          (error) => {
+            Swal.fire({
+              title: 'Erreur!',
+              text:
+                "Erreur lors de la suppression de l'utilisateur: " +
+                error.message,
+              icon: 'error',
+              confirmButtonText: 'OK',
+            });
+          }
+        );
       }
-    );
+    });
   }
+
+  // function pour réinitialiser le formulaire
   resetForm() {
     this.username = '';
     this.password = '';
@@ -120,5 +184,35 @@ export class UserListComponent implements OnInit {
     this.lastname = '';
     this.email = '';
     this.phonenumber = '';
+  }
+
+  // function pour afficher les détails d'un utilisateur
+  showDetailUser(user: User): void {
+    this.id = user.id;
+    this.username = user.username;
+    this.password = user.password;
+    this.role = user.role;
+    this.name = user.name;
+    this.lastname = user.lastName;
+    this.email = user.mail;
+    this.phonenumber = user.phoneNumber;
+
+    this.userService.getUserById(user.id).subscribe(
+      (response) => {
+        console.log('Utilisateur:', response);
+      },
+      (error) => {
+        console.error('There was an error!', error);
+      }
+    );
+    this.detailUserModal = true;
+
+    // setTimeout(() => {
+    //   this.detailUserModal = false;
+    // }, 5000);
+  }
+
+  closeModalDetail(){
+    this.detailUserModal = false;
   }
 }
