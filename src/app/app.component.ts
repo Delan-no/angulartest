@@ -11,5 +11,4 @@ export class AppComponent {
     // Exemple de données utilisateurs
   ];
 
-  showForm = false;
 }

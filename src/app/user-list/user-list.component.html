@@ -52,7 +52,7 @@
                   />
                 </svg>
               </button>
-              <button class="text-yellow-500 hover:text-yellow-600">
+              <button (click)="showUpdateUserForm()" class="text-yellow-500 hover:text-yellow-600">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-5 w-5"
@@ -64,7 +64,7 @@
                   />
                 </svg>
               </button>
-              <button class="text-red-500 hover:text-red-600">
+              <button (click)="deleteUser(user)" class="text-red-500 hover:text-red-600">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-5 w-5"
@@ -91,6 +91,129 @@
   >
     <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
       <h2 class="text-2xl font-semibold mb-4">Ajouter un utilisateur</h2>
+      <form (ngSubmit)="onSubmit()">
+        <div class="mb-4">
+          <label for="username" class="block text-sm font-medium text-gray-700"
+            >Username</label
+          >
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="mt-1 p-2 border rounded w-full"
+            required
+            [(ngModel)]="username"
+          />
+          
+        </div>
+
+        <div class="mb-4">
+          <label for="name" class="block text-sm font-medium text-gray-700"
+            >Name</label
+          >
+          <input
+            type="text"
+            id="name"
+            name="name"
+            [(ngModel)]="name"
+            class="mt-1 p-2 border rounded w-full"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label for="lastname" class="block text-sm font-medium text-gray-700"
+            >Last Name</label
+          >
+          <input
+            type="text"
+            id="lastname"
+            name="lastname"
+            [(ngModel)]="lastname"
+            class="mt-1 p-2 border rounded w-full"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label for="mail" class="block text-sm font-medium text-gray-700"
+            >Mail</label
+          >
+          <input
+            type="email"
+            id="mail"
+            name="mail"
+            [(ngModel)]="email"
+            required
+            class="mt-1 p-2 border rounded w-full"
+          />
+        </div>
+
+        <div class="mb-4">
+          <label
+            for="phonenumber"
+            class="block text-sm font-medium text-gray-700"
+            >Phone Number</label
+          >
+          <input
+            type="text"
+            id="phonenumber"
+            name="phonenumber"
+            [(ngModel)]="phonenumber"
+            required
+            class="mt-1 p-2 border rounded w-full"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="role" class="block text-sm font-medium text-gray-700"
+            >Role</label
+          >
+          <input
+            type="text"
+            id="role"
+            name="role"
+            [(ngModel)]="role"
+            class="mt-1 p-2 border rounded w-full"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label for="password" class="block text-sm font-medium text-gray-700"
+            >Password</label
+          >
+          <input
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="password"
+            class="mt-1 p-2 border rounded w-full"
+            required
+          />
+        </div>
+        <div class="flex justify-end gap-4">
+          <div
+            class="bg-red-500 cursor-pointer w-fit text-white py-2 px-4 rounded hover:bg-red-600 flex items-center"
+            (click)="showCloseUserForm()"
+          >
+            Annuler
+          </div>
+
+          <button
+            type="submit"
+            class="bg-blue-500 text-white py-2 px-4 rounded"
+          >
+            Ajouter
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- pour modifier un utilisateur -->
+  <div
+    class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50"
+    *ngIf="showFormUpdate"
+  >
+    <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+      <h2 class="text-2xl font-semibold mb-4">Modifier un utilisateur</h2>
       <form (ngSubmit)="onSubmit()">
         <div class="mb-4">
           <label for="username" class="block text-sm font-medium text-gray-700"

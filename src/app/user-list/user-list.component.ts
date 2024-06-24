@@ -27,14 +27,17 @@ export class UserListComponent implements OnInit {
   }
 
   showForm = false;
+  showFormUpdate = false;
 
   showAddUserForm() {
     this.showForm = true;
-    // console.log('show form');
+  }
+  showUpdateUserForm() {
+    this.showFormUpdate = true;
   }
   showCloseUserForm() {
     this.showForm = false;
-    // console.log('close form');
+    this.showFormUpdate = false;
   }
 
   name: string = '';
@@ -47,6 +50,7 @@ export class UserListComponent implements OnInit {
 
   onSubmit() {
     const newUser: User = {
+      id: this.users.length + 1,
       username: this.username,
       password: this.password,
       role: this.role,
@@ -56,6 +60,7 @@ export class UserListComponent implements OnInit {
       phoneNumber: this.phonenumber,
     };
 
+    // pour ajouter un utilisateur
     this.userService.addUser(newUser).subscribe(
       (response) => {
         console.log('Utilisateur créé avec succès !', response);
@@ -80,6 +85,33 @@ export class UserListComponent implements OnInit {
     );
   }
 
+  updateUser(newUser: User) {
+    // pour modifier un utilisateur
+    this.userService.updateUser(newUser).subscribe(
+      (response) => {
+        console.log('Utilisateur mis à jour avec succès!', response);
+        this.resetForm();
+        this.users.push(newUser);
+        this.showForm = false;
+      },
+      (error) => {
+        console.error("Erreur lors de la mise à jour de l'utilisateur!", error);
+      }
+    );
+  }
+
+  // pour supprimer un utilisateur
+  deleteUser(user: User) {
+    this.userService.deleteUser(user.id).subscribe(
+      () => {
+        console.log('Utilisateur supprimé avec succès!');
+        this.users = this.users.filter((user) => user.id!== user.id);
+      },
+      (error) => {
+        console.error('Erreur lors de la suppression de l\'utilisateur!', error);
+      }
+    );
+  }
   resetForm() {
     this.username = '';
     this.password = '';
